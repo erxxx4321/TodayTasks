@@ -1,6 +1,6 @@
 <template>
-  <el-row type="flex" justify="space-between" class="mb-4">
-    <el-col :span="20">
+  <el-row type="flex" justify="center" class="mb-4" :gutter="20">
+    <el-col :span="15">
       <el-input
         placeholder="請輸入内容"
         v-model="input"
@@ -23,12 +23,14 @@ export default {
   },
   methods: {
     addTask() {
+      console.log("add");
       const newTask = {
         value: this.input,
         editable: false,
         done: false
       };
       this.tasks.push(newTask);
+      console.log(this.tasks);
     }
   }
 };

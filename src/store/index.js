@@ -7,7 +7,7 @@ export default new Vuex.Store({
   state: {
     tasks: [
       {
-        value: "first task",
+        value: "今日第一件任務",
         editable: false,
         done: false
       }

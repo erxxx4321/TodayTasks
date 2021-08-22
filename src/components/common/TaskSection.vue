@@ -1,54 +1,56 @@
 <template>
   <div>
     <!-- fileter -->
-    <el-select
-      v-model="status"
-      placeholder="請選擇"
-      class="mb-3"
-      @change="filterTasks"
-    >
-      <el-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
+    <el-row type="flex" justify="end">
+      <el-select
+        v-model="status"
+        placeholder="請選擇"
+        class="mb-3"
+        @change="filterTasks"
+        style="width: 100px"
       >
-      </el-option>
-    </el-select>
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
+    </el-row>
+
     <!-- tasks table -->
     <el-table :data="tasks">
       <el-table-column label="任務">
         <template slot-scope="scope">
+          <el-checkbox v-model="scope.row.done" class="me-2"></el-checkbox>
           <span
             :class="[
               'ms-2',
+              'task',
               { 'text-decoration-line-through': scope.row.done }
             ]"
             v-if="!scope.row.editable"
+            @click="editTask(scope.$index, scope.row)"
             >{{ scope.row.value }}</span
           >
+
           <el-input
             v-else
             v-model="scope.row.value"
             @keyup.enter.native="editTask(scope.$index, scope.row)"
-            placeholder="请输入内容"
+            placeholder="請輸入内容"
+            style="width: 90%"
           ></el-input>
         </template>
       </el-table-column>
-      <el-table-column label="操作">
+      <el-table-column>
         <template slot-scope="scope">
           <el-button
-            size="mini"
-            type="success"
-            @click="finishTask(scope.$index, scope.row)"
-            >完成</el-button
-          >
-          <el-button size="mini" @click="editTask(scope.$index, scope.row)"
-            >编辑</el-button
-          >
-          <el-button size="mini" type="danger" @click="deleteTask(scope.$index)"
-            >删除</el-button
-          >
+            icon="el-icon-delete"
+            circle
+            @click="deleteTask(scope.$index)"
+          ></el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -109,4 +111,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.task:hover {
+  cursor: pointer;
+}
+</style>

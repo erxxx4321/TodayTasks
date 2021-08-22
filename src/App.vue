@@ -16,6 +16,9 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: "Noto Serif TC", serif;
+}
 a {
   text-decoration: none;
 }
