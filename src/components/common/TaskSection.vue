@@ -31,14 +31,15 @@
               { 'text-decoration-line-through': scope.row.done }
             ]"
             v-if="!scope.row.editable"
-            @click="editTask(scope.$index, scope.row)"
+            @click="editTask(scope.row)"
             >{{ scope.row.value }}</span
           >
 
           <el-input
             v-else
             v-model="scope.row.value"
-            @keyup.enter.native="editTask(scope.$index, scope.row)"
+            @keyup.enter.native="editTask(scope.row)"
+            @focusout.native="endEditTask(scope.row)"
             placeholder="請輸入内容"
             style="width: 90%"
           ></el-input>
@@ -95,13 +96,12 @@ export default {
           this.tasks = this.$store.getters.getPendingTasks;
       }
     },
-    finishTask(index, row) {
-      row.done = !row.done;
-      // console.log(index, row);
-    },
-    editTask(index, row) {
+    editTask(row) {
       row.editable = !row.editable;
-      // console.log(index, row);
+      // console.log(row);
+    },
+    endEditTask(row) {
+      row.editable = false;
     },
     deleteTask(index) {
       this.tasks.splice(index, 1);
